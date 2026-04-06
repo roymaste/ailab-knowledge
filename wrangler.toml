@@ -1,7 +1,8 @@
 name = "ailab-knowledge"
 main = "worker.js"
 compatibility_date = "2024-01-01"
+account_id = "c7a9abcbd34cdd0c0be25c8e8938d8bc"
 
 [vars]
 GITHUB_REPO = "roymaste/ailab-knowledge"
-GITHUB_BRANCH = "main"
+GITHUB_BRANCH = "master"

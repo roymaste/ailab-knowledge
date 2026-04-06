@@ -3,7 +3,7 @@
  */
 
 const GITHUB_REPO = "roymaste/ailab-knowledge";
-const GITHUB_BRANCH = "main";
+const GITHUB_BRANCH = "master";
 const KNOWLEDGE_BASE = `https://raw.githubusercontent.com/${GITHUB_REPO}/${GITHUB_BRANCH}/knowledge`;
 
 // 简单的内存缓存
@@ -17,7 +17,7 @@ async function fetchKnowledgeList() {
     return knowledgeCache;
   }
   
-  const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/knowledge`;
+  const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/knowledge?ref=${GITHUB_BRANCH}`;
   const res = await fetch(url, {
     headers: { 'User-Agent': 'ailab-knowledge-worker' }
   });
@@ -39,19 +39,13 @@ function parseMarkdown(content) {
   let inFrontmatter = false;
   let currentKey = null;
   let currentValue = [];
-  let pendingCapture = false;
   
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
     const trimmed = line.trim();
-    const hasIndent = line.startsWith('  ') || line.startsWith('\t');
     
     if (trimmed === '---') {
-      if (!inFrontmatter) {
-        inFrontmatter = true;
-      } else {
-        inFrontmatter = false;
-      }
+      inFrontmatter = !inFrontmatter;
       continue;
     }
     
@@ -60,6 +54,7 @@ function parseMarkdown(content) {
       if (colonIdx > 0) {
         const key = line.substring(0, colonIdx).trim();
         let value = line.substring(colonIdx + 1).trim();
+        // 去掉首尾引号
         if ((value.startsWith('"') && value.endsWith('"')) ||
             (value.startsWith("'") && value.endsWith("'"))) {
           value = value.slice(1, -1);
@@ -67,34 +62,28 @@ function parseMarkdown(content) {
         result[key] = value;
       }
     } else {
+      // Body section - 检查是否是新的section开始
+      // 匹配: problem:| solution:| summary:| experience:|
       const sectionMatch = trimmed.match(/^(problem|solution|summary|experience):\s*\|?\s*$/);
       
       if (sectionMatch) {
+        // 保存之前的section
         if (currentKey) {
           result[currentKey] = currentValue.join('\n').trim();
         }
         currentKey = sectionMatch[1];
         currentValue = [];
-        pendingCapture = true;
-      } else if (pendingCapture) {
-        if (trimmed === '' || trimmed === '---') {
-          // skip
-        } else if (hasIndent) {
+        // 继续处理下一行
+      } else if (currentKey) {
+        // 如果当前行不为空，且不是新的section开始，添加到当前section
+        if (trimmed && !trimmed.match(/^(problem|solution|summary|experience):/)) {
           currentValue.push(trimmed);
-          pendingCapture = false;
-        } else if (trimmed.match(/^(problem|solution|summary|experience):/)) {
-          pendingCapture = false;
-          i--;
-        } else {
-          currentValue.push(trimmed);
-          pendingCapture = false;
         }
-      } else if (currentKey && hasIndent) {
-        currentValue.push(trimmed);
       }
     }
   }
   
+  // 保存最后一个section
   if (currentKey) {
     result[currentKey] = currentValue.join('\n').trim();
   }
