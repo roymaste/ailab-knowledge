@@ -6,6 +6,11 @@ scenario: writing
 sub_scenario: social_media
 tags: [小红书, emoji, hashtag, 内容创作]
 difficulty: beginner
+confidence: 92
+validations: 47
+contributor: ailab-core
+created_at: 2026-04-06
+---
 
 problem: |
   AI写的小红书文案太平淡，缺少emoji和hashtag，用户需要手动添加
@@ -25,8 +30,3 @@ experience: |
   - 社交媒体内容必须明确要求格式元素
   - emoji和hashtag对小红书曝光很重要
   - 不要让AI"酌情添加"，要明确要求数量和位置
-
-confidence: 92
-validations: 47
-contributor: ailab-core
-created_at: 2026-04-06

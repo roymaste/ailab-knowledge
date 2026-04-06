@@ -6,6 +6,11 @@ scenario: general
 sub_scenario: prompt_optimization
 tags: [通用, prompt, 泛泛回复]
 difficulty: beginner
+confidence: 85
+validations: 42
+contributor: ailab-core
+created_at: 2026-04-06
+---
 
 problem: |
   AI回复太泛泛，都是"这取决于..."，"一般来说..."，没有给出具体答案
@@ -26,8 +31,3 @@ experience: |
   - 问具体问题时加"给出3个选项"
   - 不要问"应该怎么做"，问"我应该选A还是B"
   - 要求AI给出理由和风险分析
-
-confidence: 85
-validations: 42
-contributor: ailab-core
-created_at: 2026-04-06
