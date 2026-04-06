@@ -1,34 +1,35 @@
 ---
 id: exp_011
 title: "Anthropic API Key配置与模型选择"
-tool: openclaw
-scenario: general
-sub_scenario: provider_config
+source_url: https://docs.openclaw.ai/providers/anthropic
+source_type: docs
+scenario: OpenClaw使用
+sub_scenario: 配置
 tags: [OpenClaw, Anthropic, API配置, Claude]
 difficulty: beginner
-confidence: 95
-validations: 200
-contributor: ailab-core
-created_at: 2026-04-07
----
+confidence: 0
+validations: 0
 
 problem: |
-  不知道如何配置Anthropic API Key，或者不知道选择哪个Claude模型
+  用户不知道如何配置Anthropic API Key，
+  或者不知道选择哪个Claude模型。
 
 solution: |
-  快速配置：
+  当用户描述的场景涉及"配置Anthropic"、"用Claude"、"选择模型"时：
+  
+  快速配置命令：
   openclaw onboard
   # 选择: Anthropic API key
-
-  或者非交互式：
+  
+  非交互式：
   openclaw onboard --anthropic-api-key "$ANTHROPIC_API_KEY"
-
+  
   配置文件示例：
   {
     env: { ANTHROPIC_API_KEY: "sk-ant-..." },
     agents: { defaults: { model: { primary: "anthropic/claude-opus-4-6" } } }
   }
-
+  
   模型推荐：
   - claude-opus-4-6: 最强，适合复杂任务
   - claude-sonnet-4-6: 平衡，适合日常使用

@@ -1,33 +1,36 @@
 ---
 id: exp_013
 title: "OpenClaw会话文件过大导致性能问题"
-tool: openclaw
-scenario: general
-sub_scenario: performance
+source_url: https://github.com/openclaw/openclaw/issues
+source_type: github_issue
+scenario: OpenClaw使用
+sub_scenario: 性能优化
 tags: [OpenClaw, Session, 性能, 文件过大]
 difficulty: intermediate
-confidence: 85
-validations: 75
-contributor: ailab-core
-created_at: 2026-04-07
----
+confidence: 0
+validations: 0
 
 problem: |
-  OpenClaw会话文件越来越大，导致性能下降或内存问题
+  OpenClaw会话文件越来越大，导致：
+  - 性能下降
+  - 内存占用高
+  - 对话加载变慢
 
 solution: |
+  当用户描述会话变慢、内存问题时：
+  
   检查命令：
   - openclaw status  # 查看会话状态
   - ls -la ~/.openclaw/sessions/  # 查看会话文件大小
-
+  
   解决方案：
-  1. 定期清理旧会话
+  1. 定期清理旧会话：rm -rf ~/.openclaw/sessions/*
   2. 配置会话保留策略
-  3. 使用 summaries 减少上下文大小
-
-  手动清理：
-  rm -rf ~/.openclaw/sessions/*
-  openclaw sessions list  # 验证
+  3. 使用ContextOptimizer减少上下文大小
+  4. 归档长期会话
+  
+  验证命令：
+  openclaw sessions list
 
 summary: |
   会话文件过大会影响性能

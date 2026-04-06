@@ -1,26 +1,35 @@
 ---
 id: exp_002
 title: "AI生成代码缺少错误处理"
-tool: openclaw
-scenario: coding
-sub_scenario: code_generation
+source_url: https://github.com/roymaste/ailab-knowledge/discussions  # 待补全真实来源
+source_type: 原创
+scenario: 编程开发
+sub_scenario: 代码生成
 tags: [编程, 错误处理, 代码质量]
 difficulty: intermediate
-confidence: 88
-validations: 35
-contributor: ailab-core
-created_at: 2026-04-06
----
+confidence: 0
+validations: 0
 
 problem: |
-  AI生成的代码经常缺少错误处理，直接返回没有try-catch或边界检查的代码
+  用户让AI写代码时，AI输出的是"happy path"代码，
+  缺少try-catch、边界检查、异常处理。
+  实际运行时遇到错误会直接崩溃。
 
 solution: |
-  在prompt中加入明确的错误处理要求：
+  当用户描述的场景涉及"写代码"、"写函数"、"写Python/JS代码"时，
+  自动注入以下配置到Context：
+  
+  【代码生成配置】
   - 必须包含try-catch块
-  - 必须处理空值、边界条件
-  - 必须有超时处理
-  示例："写一个HTTP请求函数，包含：错误处理、超时5秒、空数据返回空数组而非null"
+  - 必须处理空值判断（if obj is not None）
+  - 必须处理边界条件（数组越界、除零）
+  - 必须包含超时处理（timeout）
+  - 必须包含输入验证（validate input）
+  - 必须有单元测试
+  
+  示例提示词：
+  "写一个HTTP请求函数，包含：错误处理、超时5秒、
+  空数据返回空数组而非null、输入验证"
 
 summary: |
   AI生成代码必须要求错误处理

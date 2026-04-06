@@ -1,22 +1,23 @@
 ---
 id: exp_012
 title: "Anthropic 1M上下文窗口配置"
-tool: openclaw
-scenario: general
-sub_scenario: context_window
+source_url: https://docs.openclaw.ai/providers/anthropic
+source_type: docs
+scenario: OpenClaw使用
+sub_scenario: 配置
 tags: [OpenClaw, Anthropic, 上下文, 长文本]
 difficulty: intermediate
-confidence: 88
-validations: 95
-contributor: ailab-core
-created_at: 2026-04-07
----
+confidence: 0
+validations: 0
 
 problem: |
-  需要处理超长文本，但不知道如何开启Anthropic的1M上下文窗口
+  用户需要处理超长文本（如长篇小说、代码库），
+  不知道如何开启Anthropic的1M上下文窗口。
 
 solution: |
-  配置方法：
+  当用户描述的场景涉及"长文本"、"1M上下文"、"处理大文件"时：
+  
+  配置方法（在openclaw.json中）：
   {
     agents: {
       defaults: {
@@ -28,11 +29,11 @@ solution: |
       }
     }
   }
-
+  
   注意：
   - 需要Anthropic开启长上下文权限
   - 旧版token（sk-ant-oat-*）不支持
-  - 如果没有权限会回退到标准上下文
+  - 如果没有权限会静默回退到标准上下文
 
 summary: |
   1M上下文需要显式开启context1m

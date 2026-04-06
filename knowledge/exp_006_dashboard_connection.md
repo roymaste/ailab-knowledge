@@ -1,36 +1,39 @@
 ---
 id: exp_006
 title: "OpenClaw Dashboard/Control UI无法连接"
-tool: openclaw
-scenario: general
-sub_scenario: dashboard_troubleshooting
+source_url: https://docs.openclaw.ai/gateway/troubleshooting
+source_type: docs
+scenario: OpenClaw使用
+sub_scenario: 故障排查
 tags: [OpenClaw, Dashboard, 连接问题, Control UI]
 difficulty: intermediate
-confidence: 88
-validations: 65
-contributor: ailab-core
-created_at: 2026-04-07
----
+confidence: 0
+validations: 0
 
 problem: |
-  Dashboard或Control UI无法连接，显示各种认证错误
+  Dashboard或Control UI无法连接，显示各种认证错误：
+  - device identity required
+  - AUTH_TOKEN_MISMATCH
+  - origin not allowed
+  - gateway connect failed
 
 solution: |
-  排查命令：
-  - openclaw gateway status
-  - openclaw status
-  - openclaw logs --follow
-  - openclaw doctor
-  - openclaw gateway status --json
-
-  常见错误及解决方案：
-
-  | 错误 | 原因 | 解决 |
-  |------|------|------|
-  | device identity required | 非安全上下文或缺少设备认证 | 使用安全上下文 |
-  | origin not allowed | 浏览器Origin不在allowedOrigins | 修改白名单 |
-  | AUTH_TOKEN_MISMATCH | Token不匹配 | 重置token并重试 |
-  | gateway connect failed | 目标主机/端口错误 | 检查URL |
+  当用户描述Dashboard无法连接时：
+  
+  1. 排查命令：
+     - openclaw gateway status
+     - openclaw status
+     - openclaw logs --follow
+     - openclaw doctor
+     - openclaw gateway status --json
+  
+  2. 常见错误及解决方案：
+     | 错误 | 原因 | 解决 |
+     |------|------|------|
+     | device identity required | 非安全上下文或缺少设备认证 | 使用安全上下文 |
+     | origin not allowed | 浏览器Origin不在allowedOrigins | 修改白名单 |
+     | AUTH_TOKEN_MISMATCH | Token不匹配 | 重置token并重试 |
+     | gateway connect failed | 目标主机/端口错误 | 检查URL |
 
 summary: |
   Dashboard连接问题通常是认证配置问题
